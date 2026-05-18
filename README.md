@@ -134,7 +134,7 @@ The testing framework systematically alters core MPPI navigation parameters acro
 
 | Component | Technology |
 |-----------|-----------|
-| Robot Operating System | ROS 2 |
+| Robot Operating System | ROS 2 Jazzy|
 | Navigation Framework | Nav2 |
 | Local Trajectory Planner | MPPI (Model Predictive Path Integral) |
 
