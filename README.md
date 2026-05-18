@@ -6,7 +6,7 @@
 [![Nav2](https://img.shields.io/badge/Nav2-Latest-green)](https://docs.nav2.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-This repository contains the experimental dataset for the **SAIM XPLORER-AC**, a modular autonomous mobile robot utilizing a ROS 2-based navigation architecture. The dataset consists of **24 unique experimental trials** designed to rigorously evaluate the performance, stability, and computational efficiency of the local trajectory planner under varying environmental constraints and algorithmic configurations.
+This repository contains the experimental dataset for the **SAIM XPLORER-AC**, a modular autonomous mobile robot utilizing a ROS 2-based navigation architecture. The dataset consists of **22 unique experimental trials** designed to rigorously evaluate the performance, stability, and computational efficiency of the local trajectory planner under varying environmental constraints and algorithmic configurations.
 
 ---
 
