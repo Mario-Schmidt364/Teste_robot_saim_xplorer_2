@@ -1,0 +1,115 @@
+# ─────────────────────────────────────────────────────────────────
+# SAIM XPLORER-AC -- Test Environment Configuration
+# Experimental Arena Layout
+#
+# Describes the physical setup of each test scenario.
+# All coordinates are in meters relative to the robot's start pose (0, 0).
+# ─────────────────────────────────────────────────────────────────
+
+environment:
+  location: "Faculty of Industrial Engineering and Robotics (FIIR), POLITEHNICA Bucharest"
+  surface: "flat indoor floor"
+  coordinate_frame: "robot start pose (0.0, 0.0)"
+
+# ─────────────────────────────────────────────────────────────────
+# Scenario 1: Translational Kinematics (straight_line_tests)
+# ─────────────────────────────────────────────────────────────────
+scenario_1:
+  name: "Straight Line — Translational Kinematics"
+  path_length_m: 3.0
+  obstacles: []
+  goal_pose:
+    x: 3.0
+    y: 0.0
+    yaw_deg: 0.0
+  parameter_varied: "vx_max"
+  trials: 10
+
+# ─────────────────────────────────────────────────────────────────
+# Scenario 2: Angular Kinematics (curba_tests)
+# ─────────────────────────────────────────────────────────────────
+scenario_2:
+  name: "Sharp Cornering — Angular Kinematics"
+  path_length_m: 2.0
+  turn_angle_deg: 90.0
+  obstacles: []
+  goal_pose:
+    x: 1.0
+    y: 1.0
+    yaw_deg: 90.0
+  parameter_varied: "wz_max"
+  trials: 4
+
+# ─────────────────────────────────────────────────────────────────
+# Scenario 3: Static Obstacle Clearance (obstacol_test)
+# ─────────────────────────────────────────────────────────────────
+scenario_3:
+  name: "Static Obstacle Clearance"
+  path_length_m: 3.0
+  obstacles:
+    - id: "obstacle_1"
+      type: "static"
+      position:
+        x: 1.0
+        y: 0.0
+      size_m: 0.3
+  goal_pose:
+    x: 3.0
+    y: 0.0
+    yaw_deg: 0.0
+  parameter_varied: "ObstaclesCritic.cost_weight, inflation_radius"
+  trials: 1
+
+# ─────────────────────────────────────────────────────────────────
+# Scenario 4: Multi-Obstacle Slalom (slalom_tests)
+# ─────────────────────────────────────────────────────────────────
+scenario_4:
+  name: "Multi-Obstacle Slalom Navigation"
+  path_length_m: 4.0
+  obstacles:
+    - id: "obstacle_1"
+      type: "static"
+      position:
+        x: 1.0
+        y: 0.0
+      size_m: 0.3
+    - id: "obstacle_2"
+      type: "static"
+      position:
+        x: 2.0
+        y: 0.3
+      size_m: 0.3
+    - id: "obstacle_3"
+      type: "static"
+      position:
+        x: 3.0
+        y: 0.0
+      size_m: 0.3
+  goal_pose:
+    x: 4.0
+    y: 0.0
+    yaw_deg: 0.0
+  parameter_varied: "temperature, gamma"
+  trials: 4
+
+# ─────────────────────────────────────────────────────────────────
+# Scenario 5: Dynamic Obstacle Evasion (batch_tests)
+# ─────────────────────────────────────────────────────────────────
+scenario_5:
+  name: "Dynamic Obstacle Evasion"
+  path_length_m: 3.0
+  obstacles:
+    - id: "obstacle_1"
+      type: "dynamic"
+      initial_position:
+        x: 1.0
+        y: 0.0
+      movement: "towards robot start pose"
+      simultaneous_start: true
+  goal_pose:
+    x: 3.0
+    y: 0.0
+    yaw_deg: 0.0
+  parameter_varied: "batch_size"
+  batch_sizes_tested: [200, 400, 850]
+  trials: 3

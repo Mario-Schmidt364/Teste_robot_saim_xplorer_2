@@ -1,0 +1,147 @@
+# ─────────────────────────────────────────────────────────────────
+# SAIM XPLORER-AC -- MPPI Controller Parameters
+# Experimental Configuration
+#
+# Used by the Nav2 controller_server as the local trajectory planner.
+# Place at: config/mppi_params.yaml
+# ─────────────────────────────────────────────────────────────────
+
+controller_server:
+  ros__parameters:
+    controller_frequency: 20.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.5
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 10.0
+
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.15
+      yaw_goal_tolerance: 0.1
+      stateful: true
+
+    FollowPath:
+      plugin: "nav2_mppi_controller::MPPIController"
+
+      # ── Sampling Parameters ────────────────────────────────────
+      # Number of sampled trajectories per control cycle.
+      # Scenario 5 (Dynamic Obstacle Evasion) varies this parameter.
+      #   Tested values: 200, 400, 850
+      time_steps: 56
+      model_dt: 0.05
+      batch_size: 1000          # default; varied in batch_tests (200, 400, 850)
+      vx_std: 0.2
+      vy_std: 0.0
+      wz_std: 0.4
+      vx_max: 0.5               # Scenario 1: varied (max linear velocity)
+      vx_min: -0.35
+      vy_max: 0.0
+      wz_max: 1.0               # Scenario 2: varied (max angular velocity)
+      iteration_count: 1
+
+      # ── Temperature & Gamma ────────────────────────────────────
+      # Controls exploration vs exploitation in trajectory sampling.
+      # Scenario 4 (Slalom) varies these parameters.
+      temperature: 0.3          # varied across slalom tests
+      gamma: 0.015              # varied across slalom tests
+
+      # ── Motion Model ───────────────────────────────────────────
+      motion_model: "DiffDrive"
+      visualize: false
+      regenerate_noises: false
+      TrajectoryVisualizer:
+        trajectory_step: 5
+        time_step: 3
+
+      # ── Cost Critics ───────────────────────────────────────────
+      # Each critic assigns a cost to sampled trajectories.
+      # Scenario 3 (Static Obstacle) varies obstacle cost parameters.
+      critics: [
+        "ConstraintCritic",
+        "GoalCritic",
+        "GoalAngleCritic",
+        "PathAlignCritic",
+        "PathFollowCritic",
+        "PathAngleCritic",
+        "ObstaclesCritic"
+      ]
+
+      ConstraintCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 4.0
+
+      GoalCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 5.0
+        threshold_to_consider: 1.0
+
+      GoalAngleCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 3.0
+        threshold_to_consider: 0.4
+
+      PathAlignCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 14.0
+        max_path_occupancy_ratio: 0.05
+        trajectory_point_step: 3
+        threshold_to_consider: 0.40
+        offset_from_furthest: 20
+        use_path_orientations: false
+
+      PathFollowCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 5.0
+        offset_from_furthest: 5
+        threshold_to_consider: 1.0
+
+      PathAngleCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 2.0
+        offset_from_furthest: 4
+        threshold_to_consider: 0.40
+        max_angle_to_furthest: 1.0
+        forward_preference: true
+
+      ObstaclesCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 1.5        # Scenario 3: varied (obstacle cost weight)
+        repulsion_weight: 1.5
+        critical_weight: 20.0
+        consider_footprint: false
+        collision_cost: 10000.0
+        collision_margin_distance: 0.10
+        near_goal_distance: 0.5
+        inflation_radius: 0.55  # Scenario 3: varied (costmap inflation)
+        cost_scaling_factor: 10.0
+
+# ─────────────────────────────────────────────────────────────────
+# Velocity Bounds (enforced by controller)
+# ─────────────────────────────────────────────────────────────────
+velocity_bounds:
+  linear_max_ms: 0.5
+  angular_max_rads: 1.0
+
+# ─────────────────────────────────────────────────────────────────
+# Parameters Varied Per Scenario (summary)
+# ─────────────────────────────────────────────────────────────────
+# Scenario 1 -- Straight Line:   vx_max
+# Scenario 2 -- Sharp Cornering: wz_max
+# Scenario 3 -- Static Obstacle: ObstaclesCritic.cost_weight, inflation_radius
+# Scenario 4 -- Slalom:          temperature, gamma
+# Scenario 5 -- Dynamic Obstacle: batch_size (200, 400, 850)

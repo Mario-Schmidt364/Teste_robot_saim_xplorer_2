@@ -1,5 +1,11 @@
 # Experimental Dataset: SAIM XPLORER-AC Modular Autonomous Mobile Robot
 
+**Local Trajectory Planner Evaluation — MPPI Controller under Varying Kinematic and Environmental Constraints**
+
+[![ROS 2](https://img.shields.io/badge/ROS_2-Humble-blue)](https://docs.ros.org/en/humble/)
+[![Nav2](https://img.shields.io/badge/Nav2-Latest-green)](https://docs.nav2.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 This repository contains the experimental dataset for the **SAIM XPLORER-AC**, a modular autonomous mobile robot utilizing a ROS 2-based navigation architecture. The dataset consists of **24 unique experimental trials** designed to rigorously evaluate the performance, stability, and computational efficiency of the local trajectory planner under varying environmental constraints and algorithmic configurations.
 
 ---
@@ -14,29 +20,34 @@ The SAIM XPLORER-AC uses the **Model Predictive Path Integral (MPPI)** controlle
 
 ```
 Teste_robot_saim_xplorer_2/
-├── straight_line_tests/          # Scenario 1: Translational Kinematics (10 trials)
-│   ├── test_01_linie_dreapta/    #   Trial 1 — vx configuration A
-│   ├── test_02_linie_dreapta/    #   Trial 2 — vx configuration B
-│   ├── ...
-│   └── test_10_linie_dreapta/    #   Trial 10 — vx configuration J
-├── curba_tests/                  # Scenario 2: Angular Kinematics & Sharp Cornering (4 trials)
-│   ├── test_01_curba/
-│   ├── test_02_curba/
-│   ├── test_03_curba/
-│   └── test_04_curba/
-├── obstacol_test/                # Scenario 3: Static Obstacle Clearance (1 trial)
-│   └── test_obstacol/
-├── slalom_tests/                 # Scenario 4: Multi-Obstacle Slalom Navigation (4 trials)
-│   ├── test_01_slalom/
-│   ├── test_02_slalom/
-│   ├── test_03_slalom/
-│   └── test_04_slalom/
-├── batch_tests/                  # Scenario 5: Dynamic Obstacle Evasion (3 trials)
-│   ├── test_batch_200/           #   Batch size 200
-│   ├── test_batch_400/           #   Batch size 400
-│   └── test_batch_850/           #   Batch size 850
+├── config/                           # Configuration files
+│   ├── mppi_params.yaml              #   MPPI controller parameters (all scenarios)
+│   ├── test_environment.yaml         #   Test arena layout and obstacle positions
+│   └── ROBOT.md                      #   SAIM XPLORER-AC robot profile & operator guide
+├── data/                             # Experimental dataset
+│   ├── straight_line_tests/          #   Scenario 1: Translational Kinematics (10 trials)
+│   │   ├── test_01_linie_dreapta/    #     Trial 1 — vx configuration A
+│   │   ├── test_02_linie_dreapta/    #     Trial 2 — vx configuration B
+│   │   ├── ...
+│   │   └── test_10_linie_dreapta/    #     Trial 10 — vx configuration J
+│   ├── curba_tests/                  #   Scenario 2: Angular Kinematics (4 trials)
+│   │   ├── test_01_curba/
+│   │   ├── test_02_curba/
+│   │   ├── test_03_curba/
+│   │   └── test_04_curba/
+│   ├── obstacol_test/                #   Scenario 3: Static Obstacle Clearance (1 trial)
+│   │   └── test_obstacol/
+│   ├── slalom_tests/                 #   Scenario 4: Multi-Obstacle Slalom (4 trials)
+│   │   ├── test_01_slalom/
+│   │   ├── test_02_slalom/
+│   │   ├── test_03_slalom/
+│   │   └── test_04_slalom/
+│   └── batch_tests/                  #   Scenario 5: Dynamic Obstacle Evasion (3 trials)
+│       ├── test_batch_200/           #     Batch size 200
+│       ├── test_batch_400/           #     Batch size 400
+│       └── test_batch_850/           #     Batch size 850
 ├── README.md
-└── LICENSE                       # MIT
+└── LICENSE                           # MIT
 ```
 
 ---
@@ -134,7 +145,7 @@ The testing framework systematically alters core MPPI navigation parameters acro
 
 | Component | Technology |
 |-----------|-----------|
-| Robot Operating System | ROS 2 Jazzy|
+| Robot Operating System | ROS 2 |
 | Navigation Framework | Nav2 |
 | Local Trajectory Planner | MPPI (Model Predictive Path Integral) |
 
