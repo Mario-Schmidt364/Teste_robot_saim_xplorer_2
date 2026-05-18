@@ -2,7 +2,7 @@
 
 **Local Trajectory Planner Evaluation — MPPI Controller under Varying Kinematic and Environmental Constraints**
 
-[![ROS 2](https://img.shields.io/badge/ROS_2-Humble-blue)](https://docs.ros.org/en/humble/)
+[![ROS 2](https://img.shields.io/badge/ROS_2-Jazzy-blue)](https://docs.ros.org/en/jazzy/)
 [![Nav2](https://img.shields.io/badge/Nav2-Latest-green)](https://docs.nav2.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 

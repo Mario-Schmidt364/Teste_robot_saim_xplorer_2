@@ -14,8 +14,8 @@ The SAIM XPLORER-AC is a ground-based differential drive mobile robot designed f
 
 | Component               | Technology          |
 |-------------------------|---------------------|
-| Operating System        | Ubuntu 22.04 LTS    |
-| Robot Operating System  | ROS 2 Humble        |
+| Operating System        | Ubuntu 24.04 LTS    |
+| Robot Operating System  | ROS 2 Jazzy        |
 | Navigation Framework    | Nav2                |
 | Local Trajectory Planner| MPPI Controller     |
 | Global Planner          | NavFn / Smac        |
@@ -41,7 +41,7 @@ The SAIM XPLORER-AC is a ground-based differential drive mobile robot designed f
 All ROS 2 commands require sourcing the environment first:
 
 ```bash
-source /opt/ros/humble/setup.bash
+source /opt/ros/jazzy/setup.bash
 ```
 
 To launch the full navigation stack:
